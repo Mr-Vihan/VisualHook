@@ -318,31 +318,67 @@
         }
 
         async function send() {
-            if(!validateURL()) return alert("Error: Invalid URL.");
-            const btn = document.getElementById('send-btn');
-            btn.innerText = "TRANSMITTING..."; btn.disabled = true;
-
-            const embeds = [];
-            Array.from(document.getElementsByClassName('embed-entry')).forEach(entry => {
-                const t = entry.querySelector('.embed-title').value.trim();
-                const d = entry.querySelector('.embed-desc').value.trim();
-                const c = entry.querySelector('.embed-color').value;
-                if (t || d) embeds.push({ title: t || undefined, description: d || undefined, color: parseInt(c.replace("#", ""), 16) });
+    if(!validateURL()) return alert("Error: Invalid Webhook URL.");
+    
+    const btn = document.getElementById('send-btn');
+    const webhookUrl = document.getElementById('webhook-url').value.trim();
+    
+    // Grabbing values and trimming them to avoid space-only errors
+    const content = document.getElementById('msg-input').value.trim();
+    const username = document.getElementById('hook-name').value.trim();
+    const avatar_url = document.getElementById('hook-avatar').value.trim();
+    
+    const embeds = [];
+    Array.from(document.getElementsByClassName('embed-entry')).forEach(entry => {
+        const t = entry.querySelector('.embed-title').value.trim();
+        const d = entry.querySelector('.embed-desc').value.trim();
+        const c = entry.querySelector('.embed-color').value;
+        if (t || d) {
+            embeds.push({ 
+                title: t || undefined, 
+                description: d || undefined, 
+                color: parseInt(c.replace("#", ""), 16) 
             });
-
-            const payload = {
-                username: document.getElementById('hook-name').value.trim() || undefined,
-                avatar_url: document.getElementById('hook-avatar').value.trim() || undefined,
-                content: document.getElementById('msg-input').value.trim() || undefined,
-                embeds: embeds.length > 0 ? embeds : undefined
-            };
-
-            try {
-                const res = await fetch(document.getElementById('webhook-url').value, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload) });
-                if(res.ok) alert("Success."); else alert("API Rejection (400). Ensure embeds aren't empty.");
-            } catch(e) { alert("Network Error."); }
-            finally { btn.innerText = "TRANSMIT PAYLOAD"; btn.disabled = false; }
         }
+    });
+
+    // Final check: Discord needs at least content OR an embed
+    if (!content && embeds.length === 0) {
+        return alert("Error: Payload is empty. Add a message or an embed.");
+    }
+
+    btn.innerText = "TRANSMITTING..."; 
+    btn.disabled = true;
+
+    // Constructing the payload object carefully
+    const payload = {};
+    if (content) payload.content = content;
+    if (username) payload.username = username;
+    if (avatar_url) payload.avatar_url = avatar_url;
+    if (embeds.length > 0) payload.embeds = embeds;
+
+    try {
+        const res = await fetch(webhookUrl, { 
+            method: 'POST', 
+            headers: {'Content-Type': 'application/json'}, 
+            body: JSON.stringify(payload) 
+        });
+        
+        if(res.ok) {
+            alert("Success: Message Sent!");
+        } else {
+            const errData = await res.json();
+            // This will tell you EXACTLY what field Discord hates
+            console.error("Discord Error Details:", errData);
+            alert("Discord Error: " + (errData.message || "Invalid Fields Check Console"));
+        }
+    } catch(e) { 
+        alert("Network Error: Connection Refused."); 
+    } finally { 
+        btn.innerText = "TRANSMIT PAYLOAD"; 
+        btn.disabled = false; 
+    }
+}
     </script>
 </body>
 </html>
