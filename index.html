@@ -1,52 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" id="root" class="dark">
 <head>
-<!DOCTYPE html>
-<html lang="en" id="root" class="dark">
-</html>
-<link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><rect width="16" height="16" rx="3" fill="%238b5cf6"/><text x="8" y="11" font-family="Arial" font-weight="900" font-size="10" text-anchor="middle" fill="white">V</text></svg>'>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VisualHook | Secure Webhook Console</title>
+    <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><rect width="16" height="16" rx="3" fill="%238b5cf6"/><text x="8" y="11" font-family="Arial" font-weight="900" font-size="10" text-anchor="middle" fill="white">V</text></svg>'>
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = { 
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#8b5cf6',
-                        secondary: '#06b6d4',
-                        darkest: '#050505'
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #050505; color: #f8fafc; overflow-x: hidden; }
-        .page { display: none; min-height: calc(100vh - 80px); padding: 60px 20px; }
-        .page.active { display: flex; flex-direction: column; animation: fadeIn 0.4s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .glass { background: #0d0d0d; border: 1px solid #1a1a1a; transition: 0.3s; }
-        .btn-gradient { background: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%); transition: 0.2s; }
-        
-        .dc-preview { background-color: #313338; border-radius: 8px; font-family: 'Inter', sans-serif; }
-        #content-render { color: #ffffff !important; opacity: 1 !important; font-size: 15px; }
-        
-        .dc-embed { border-left: 4px solid #5865f2; background: #2b2d31; border-radius: 4px; padding: 16px; margin-top: 8px; }
-        .dc-quote { border-left: 4px solid #4e5058; padding-left: 12px; margin: 4px 0; }
-        
-        input, textarea { background: #000 !important; border: 1px solid #1a1a1a !important; color: #fff !important; outline: none; transition: 0.2s; }
-        .input-error { border-color: #ef4444 !important; box-shadow: 0 0 10px rgba(239, 68, 68, 0.2); }
-        .input-success { border-color: #10b981 !important; }
-
-        .doc-label { font-size: 11px; font-weight: 800; color: #8b5cf6; letter-spacing: 0.2em; text-transform: uppercase; }
-        .legal-h3 { font-size: 1.5rem; font-weight: 800; text-transform: uppercase; font-style: italic; margin-bottom: 1rem; color: #fff; border-left: 4px solid #8b5cf6; padding-left: 1rem; }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="dark">
+<body class="dark flex flex-col min-h-screen">
 
     <nav class="h-20 border-b border-white/5 sticky top-0 z-50 glass backdrop-blur-xl px-6">
         <div class="max-w-7xl mx-auto h-full flex justify-between items-center">
@@ -155,8 +118,8 @@
                         <h3 class="legal-h3">Terms of Use</h3>
                         <div class="space-y-4">
                             <p class="text-[11px] font-bold text-primary uppercase tracking-widest">Non-Affiliation Disclaimer</p>
-                            <p class="text-slate-400 leading-relaxed text-sm">VisualHook is an independent application. We are <strong>NOT</strong> affiliated, associated, authorized, endorsed by, or in any way officially connected with Discord Inc. The name "Discord" is a registered trademark of its owners.</p>
-                            <p class="text-slate-400 leading-relaxed text-sm">By using this console, you agree to comply with Discord's Terms of Service and Community Guidelines. You are solely responsible for all content sent via your webhooks.</p>
+                            <p class="text-slate-400 leading-relaxed text-sm">VisualHook is an independent application. We are <strong>NOT</strong> affiliated, associated, authorized, endorsed by, or in any way officially connected with Discord Inc.</p>
+                            <p class="text-slate-400 leading-relaxed text-sm">By using this console, you agree to comply with Discord's Terms of Service. You are solely responsible for all content sent via your webhooks.</p>
                         </div>
                     </section>
                 </div>
@@ -165,8 +128,8 @@
                         <h3 class="legal-h3">Privacy Policy</h3>
                         <div class="space-y-4">
                             <p class="text-[11px] font-bold text-secondary uppercase tracking-widest">Zero-Data Architecture</p>
-                            <p class="text-slate-400 leading-relaxed text-sm">We believe in absolute privacy. VisualHook does not use a backend database. Your Webhook URLs and message content are never stored, logged, or visible to the developers.</p>
-                            <p class="text-slate-400 leading-relaxed text-sm">All transmissions happen directly from your browser to Discord's servers via HTTPS. We may use <code>localStorage</code> to remember your UI preferences locally on your machine.</p>
+                            <p class="text-slate-400 leading-relaxed text-sm">VisualHook does not use a backend database. Your Webhook URLs and message content are never stored or logged.</p>
+                            <p class="text-slate-400 leading-relaxed text-sm">Transmissions happen directly from your browser to Discord's servers via HTTPS.</p>
                         </div>
                     </section>
                 </div>
@@ -180,7 +143,7 @@
                             <p class="text-[11px] font-bold text-red-500 uppercase tracking-widest">Copyright © 2026</p>
                             <p class="text-slate-400 leading-relaxed text-sm">
                                 All code, design elements, and logic within VisualHook are the exclusive property of <strong>Vihan Mishra</strong>. 
-                                <strong>Unauthorized copying, redistribution, or modification of this source code is strictly prohibited.</strong>
+                                <strong>Unauthorized copying or redistribution is strictly prohibited.</strong>
                             </p>
                         </div>
                     </section>
@@ -191,7 +154,7 @@
                         <div class="space-y-4">
                             <p class="text-[11px] font-bold text-slate-200 uppercase tracking-widest">End-User Permissions</p>
                             <p class="text-slate-400 leading-relaxed text-sm">
-                                You are granted a non-exclusive license to <strong>use</strong> this tool for webhook management. This does not grant you the right to clone the application or host a separate version of this service.
+                                You are granted a non-exclusive license to <strong>use</strong> this tool. This does not grant you the right to clone the application.
                             </p>
                         </div>
                     </section>
@@ -227,156 +190,16 @@
         </div>
     </main>
 
-    <script>
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId + '-page').classList.add('active');
-            window.scrollTo(0,0);
-        }
-
-        function validateURL() {
-            const url = document.getElementById('webhook-url').value;
-            const input = document.getElementById('webhook-url');
-            const status = document.getElementById('url-status');
-            const pattern = /^https:\/\/discord\.com\/api\/webhooks\/\d+\/[\w-]+$/;
-
-            if(url === "") {
-                input.className = "w-full p-4 rounded-2xl text-sm";
-                status.innerText = "";
-                return false;
-            }
-
-            if(pattern.test(url)) {
-                input.className = "w-full p-4 rounded-2xl text-sm input-success";
-                status.innerText = "✓ Valid Endpoint";
-                status.className = "text-[9px] font-bold uppercase tracking-widest text-green-500";
-                return true;
-            } else {
-                input.className = "w-full p-4 rounded-2xl text-sm input-error";
-                status.innerText = "× Invalid Discord URL";
-                status.className = "text-[9px] font-bold uppercase tracking-widest text-red-500";
-                return false;
-            }
-        }
-
-        function parseDiscord(text) {
-            if(!text) return "";
-            let str = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-            str = str.replace(/^&gt;&gt;&gt;\s([\s\S]*)$/m, '<div class="dc-quote">$1</div>');
-            str = str.replace(/^&gt;\s(.*)$/gm, '<div class="dc-quote">$1</div>');
-            return str
-                .replace(/\[(.*?)\]\((.*?)\)/g, '<a class="text-blue-400 hover:underline" href="$2" target="_blank">$1</a>')
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                .replace(/\*(.*?)\*/g, '<em>$1</em>')
-                .replace(/`(.*?)`/g, '<code class="bg-black/30 px-1 rounded">$1</code>')
-                .replace(/\n/g, '<br>');
-        }
-
-        function addEmbed() {
-            const container = document.getElementById('embeds-container');
-            const count = container.getElementsByClassName('embed-entry').length;
-            if (count >= 10) return alert("Max 10 embeds.");
-            
-            const div = document.createElement('div');
-            div.className = "embed-entry glass p-6 rounded-3xl border-white/5 space-y-4 relative";
-            div.innerHTML = `
-                <div class="flex justify-between items-center">
-                    <span class="text-[10px] font-bold uppercase tracking-tighter opacity-40">Embed #${count + 1}</span>
-                    <button onclick="this.parentElement.parentElement.remove(); updatePreview();" class="text-red-500 text-[9px] font-bold uppercase tracking-widest">Remove</button>
-                </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <input type="text" placeholder="Embed Title" class="embed-title p-4 rounded-2xl text-sm" oninput="updatePreview()">
-                    <input type="color" value="#8b5cf6" class="embed-color w-full h-[54px] rounded-2xl bg-transparent border-none cursor-pointer" oninput="updatePreview()">
-                </div>
-                <textarea rows="3" placeholder="Embed Description..." class="embed-desc w-full p-4 rounded-2xl text-sm resize-none" oninput="updatePreview()"></textarea>
-            `;
-            container.appendChild(div);
-            updatePreview();
-        }
-
-        function updatePreview() {
-            const name = document.getElementById('hook-name').value;
-            const avatar = document.getElementById('hook-avatar').value;
-            const content = document.getElementById('msg-input').value;
-
-            document.getElementById('prev-name').innerText = name || "VisualBot";
-            document.getElementById('prev-avatar').src = avatar || "https://cdn.discordapp.com/embed/avatars/0.png";
-            document.getElementById('content-render').innerHTML = parseDiscord(content) || "Awaiting transmission data...";
-            
-            const list = document.getElementById('embed-list-render');
-            list.innerHTML = "";
-            Array.from(document.getElementsByClassName('embed-entry')).forEach(entry => {
-                const t = entry.querySelector('.embed-title').value;
-                const d = entry.querySelector('.embed-desc').value;
-                const c = entry.querySelector('.embed-color').value;
-                if(t || d) {
-                    const eb = document.createElement('div');
-                    eb.className = "dc-embed"; eb.style.borderLeftColor = c;
-                    eb.innerHTML = `<div class="font-bold text-white text-[17px] mb-1">${parseDiscord(t)}</div><div class="text-[14px] text-[#dbdee1]">${parseDiscord(d)}</div>`;
-                    list.appendChild(eb);
-                }
-            });
-        }
-
-        async function send() {
-            if(!validateURL()) return alert("Error: Invalid URL.");
-            const btn = document.getElementById('send-btn');
-            btn.innerText = "TRANSMITTING..."; btn.disabled = true;
-
-            const embeds = [];
-            Array.from(document.getElementsByClassName('embed-entry')).forEach(entry => {
-                const t = entry.querySelector('.embed-title').value.trim();
-                const d = entry.querySelector('.embed-desc').value.trim();
-                const c = entry.querySelector('.embed-color').value;
-                if (t || d) embeds.push({ title: t || undefined, description: d || undefined, color: parseInt(c.replace("#", ""), 16) });
-            });
-
-            const payload = {
-                username: document.getElementById('hook-name').value.trim() || undefined,
-                avatar_url: document.getElementById('hook-avatar').value.trim() || undefined,
-                content: document.getElementById('msg-input').value.trim() || undefined,
-                embeds: embeds.length > 0 ? embeds : undefined
-            };
-
-            try {
-                const res = await fetch(document.getElementById('webhook-url').value, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload) });
-                if(res.ok) alert("Success."); else alert("API Rejection (400). Ensure embeds aren't empty.");
-            } catch(e) { alert("Network Error."); }
-            finally { btn.innerText = "TRANSMIT PAYLOAD"; btn.disabled = false; }
-        }
-    </script>
-</body>
-</html>
-<head>
-    <style>
-        /* Adding a small style for the new footer */
-        footer {
-            margin-top: auto;
-            padding: 40px 20px;
-            text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            opacity: 0.5;
-            transition: 0.3s;
-        }
-        footer:hover { opacity: 1; }
-    </style>
-</head>
-<body class="dark flex flex-col min-h-screen">
-
-    <footer>
+    <footer class="mt-auto p-10 border-t border-white/5 opacity-50 hover:opacity-100 transition-all">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-2">
                 <div class="w-5 h-5 rounded bg-primary/20 flex items-center justify-center text-primary text-[10px] font-bold">V</div>
                 <span class="text-[11px] font-bold tracking-widest uppercase">VisualHook Console</span>
             </div>
-            <p class="text-[10px] font-medium tracking-tight">
-                Copyright © 2026 <span class="text-white">Vihan Mishra</span>. 
-                <span class="text-primary italic ml-2">All Rights Reserved.</span>
-            </p>
-            <div class="text-[9px] uppercase tracking-widest font-black opacity-40">
-                Proprietary Software
-            </div>
+            <p class="text-[10px] font-medium tracking-tight">Copyright © 2026 <span class="text-white">Vihan Mishra</span>.</p>
         </div>
     </footer>
 
-    </body>
+    <script src="script.js"></script>
+</body>
+</html>
