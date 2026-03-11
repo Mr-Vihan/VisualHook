@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" id="root" class="dark">
 <head>
+<link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><rect width="16" height="16" rx="3" fill="%238b5cf6"/><text x="8" y="11" font-family="Arial" font-weight="900" font-size="10" text-anchor="middle" fill="white">V</text></svg>'>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VisualHook | Secure Webhook Console</title>
-    <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><rect width="16" height="16" rx="3" fill="%238b5cf6"/><text x="8" y="11" font-family="Arial" font-weight="900" font-size="10" text-anchor="middle" fill="white">V</text></svg>'>
-    
-    <script src="https://cdn.tailwindcss.com" data-cfasync="false"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { 
             darkMode: 'class',
@@ -24,25 +23,27 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: #050505; color: #f8fafc; overflow-x: hidden; }
-        .page { display: none; min-height: calc(100vh - 160px); padding: 60px 20px; }
+        .page { display: none; min-height: calc(100vh - 80px); padding: 60px 20px; }
         .page.active { display: flex; flex-direction: column; animation: fadeIn 0.4s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .glass { background: #0d0d0d; border: 1px solid #1a1a1a; transition: 0.3s; }
         .btn-gradient { background: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%); transition: 0.2s; }
+        
         .dc-preview { background-color: #313338; border-radius: 8px; font-family: 'Inter', sans-serif; }
         #content-render { color: #ffffff !important; opacity: 1 !important; font-size: 15px; }
+        
         .dc-embed { border-left: 4px solid #5865f2; background: #2b2d31; border-radius: 4px; padding: 16px; margin-top: 8px; }
         .dc-quote { border-left: 4px solid #4e5058; padding-left: 12px; margin: 4px 0; }
+        
         input, textarea { background: #000 !important; border: 1px solid #1a1a1a !important; color: #fff !important; outline: none; transition: 0.2s; }
         .input-error { border-color: #ef4444 !important; box-shadow: 0 0 10px rgba(239, 68, 68, 0.2); }
         .input-success { border-color: #10b981 !important; }
+
         .doc-label { font-size: 11px; font-weight: 800; color: #8b5cf6; letter-spacing: 0.2em; text-transform: uppercase; }
         .legal-h3 { font-size: 1.5rem; font-weight: 800; text-transform: uppercase; font-style: italic; margin-bottom: 1rem; color: #fff; border-left: 4px solid #8b5cf6; padding-left: 1rem; }
-        footer { margin-top: auto; padding: 40px 20px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); opacity: 0.5; transition: 0.3s; }
-        footer:hover { opacity: 1; }
     </style>
 </head>
-<body class="dark flex flex-col min-h-screen">
+<body class="dark">
 
     <nav class="h-20 border-b border-white/5 sticky top-0 z-50 glass backdrop-blur-xl px-6">
         <div class="max-w-7xl mx-auto h-full flex justify-between items-center">
@@ -53,7 +54,7 @@
             <div class="flex items-center gap-8 text-[11px] font-bold uppercase tracking-widest opacity-60">
                 <button onclick="showPage('hub')" class="hover:text-primary transition-all">Home</button>
                 <button onclick="showPage('sender')" class="hover:text-primary transition-all">Editor</button>
-                <button onclick="showPage('docs')" class="hover:text-primary transition-all">Docs</button>
+                <button onclick="showPage('docs')" class="hover:text-primary transition-all">Documentation</button>
                 <button onclick="showPage('contact')" class="hover:text-primary transition-all">Support</button>
                 <button onclick="showPage('legal')" class="hover:text-primary transition-all">Legal</button>
             </div>
@@ -61,7 +62,10 @@
     </nav>
 
     <main id="hub-page" class="page active items-center justify-center text-center">
-        <h1 class="text-7xl md:text-9xl font-black mb-8 uppercase tracking-tighter italic">Instant<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Payloads</span></h1>
+        <h1 class="text-7xl md:text-9xl font-black mb-8 uppercase tracking-tighter italic">
+            Instant<br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Payloads</span>
+        </h1>
         <p class="text-slate-500 text-xl mb-12 font-medium max-w-2xl">Precision-engineered console for Discord developers.</p>
         <button onclick="showPage('sender')" class="px-16 py-6 rounded-2xl btn-gradient text-white font-black tracking-widest uppercase shadow-2xl hover:scale-105 transition-all">Launch Console</button>
     </main>
@@ -80,16 +84,29 @@
                         <input type="text" id="hook-avatar" placeholder="Avatar URL" class="p-4 rounded-2xl text-sm" oninput="updatePreview()">
                     </div>
                 </div>
+
                 <div class="glass p-10 rounded-[40px] space-y-5">
                     <span class="doc-label text-secondary">Payload Content</span>
                     <textarea id="msg-input" rows="4" placeholder="Enter message body..." class="w-full p-4 rounded-2xl text-sm resize-none" oninput="updatePreview()"></textarea>
-                    <div id="embeds-container" class="space-y-4"></div>
+                    
+                    <div id="embeds-container" class="space-y-4">
+                        <div class="embed-entry glass p-6 rounded-3xl border-white/5 space-y-4 relative">
+                            <span class="text-[10px] font-bold uppercase tracking-tighter opacity-40">Embed #1</span>
+                            <div class="grid grid-cols-2 gap-4">
+                                <input type="text" placeholder="Embed Title" class="embed-title p-4 rounded-2xl text-sm" oninput="updatePreview()">
+                                <input type="color" value="#8b5cf6" class="embed-color w-full h-[54px] rounded-2xl bg-transparent border-none cursor-pointer" oninput="updatePreview()">
+                            </div>
+                            <textarea rows="3" placeholder="Embed Description..." class="embed-desc w-full p-4 rounded-2xl text-sm resize-none" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+
                     <div class="flex gap-4">
                         <button onclick="addEmbed()" class="flex-1 py-4 rounded-2xl border border-white/10 text-[11px] font-black tracking-widest uppercase hover:bg-white/5 transition-all">+ Add Embed</button>
                         <button onclick="send()" id="send-btn" class="flex-[2] py-4 rounded-2xl btn-gradient text-white font-black tracking-widest uppercase shadow-lg">Transmit Payload</button>
                     </div>
                 </div>
             </div>
+
             <div class="space-y-6">
                 <span class="doc-label opacity-40 ml-4">Live Execution Preview</span>
                 <div class="dc-preview p-8 shadow-2xl border border-white/5">
@@ -100,7 +117,7 @@
                                 <span id="prev-name" class="font-bold text-[15px] text-white">VisualBot</span>
                                 <span class="bg-[#5865F2] text-[10px] text-white px-1.5 py-0.5 rounded-sm font-bold uppercase tracking-wider">App</span>
                             </div>
-                            <div id="content-render" class="leading-relaxed whitespace-pre-wrap break-words">Awaiting data...</div>
+                            <div id="content-render" class="leading-relaxed whitespace-pre-wrap break-words">Awaiting transmission data...</div>
                             <div id="embed-list-render" class="space-y-2"></div>
                         </div>
                     </div>
@@ -110,45 +127,104 @@
     </main>
 
     <main id="docs-page" class="page max-w-6xl mx-auto w-full">
-        <div class="glass p-16 rounded-[60px] space-y-8">
-            <h2 class="text-4xl font-black uppercase italic">Documentation</h2>
-            <p class="text-slate-400">VisualHook handles Discord payload serialization locally in your browser for maximum speed and security.</p>
-        </div>
-    </main>
-
-    <main id="legal-page" class="page max-w-6xl mx-auto w-full">
-        <div class="glass p-16 rounded-[60px] space-y-12">
-            <h2 class="text-4xl font-black uppercase italic text-center">Legal & Proprietary</h2>
-            <div class="grid md:grid-cols-2 gap-10">
-                <section>
-                    <h3 class="legal-h3">Ownership</h3>
-                    <p class="text-sm text-slate-400">Copyright © 2026 Vihan Mishra. All rights reserved. Original code and UI architecture.</p>
-                </section>
-                <section>
-                    <h3 class="legal-h3">Privacy</h3>
-                    <p class="text-sm text-slate-400">Zero-data architecture. No logs, no databases, no tracking. Your webhooks remain yours.</p>
-                </section>
+        <div class="glass p-16 md:p-24 rounded-[60px] space-y-16">
+            <h2 class="text-5xl font-black italic uppercase tracking-tighter">Technical Documentation</h2>
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="space-y-6">
+                    <h4 class="text-primary font-black uppercase tracking-widest text-xs">Core API Logic</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed">VisualHook acts as a direct interface to the Discord Webhook API. When you execute a payload, the application serializes your inputs into a valid JSON object.</p>
+                </div>
+                <div class="space-y-6">
+                    <h4 class="text-secondary font-black uppercase tracking-widest text-xs">Markdown Standards</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed">Our engine parses Discord-flavored markdown in real-time. This includes <strong>**bold**</strong> and <em>*italic*</em> text.</p>
+                </div>
             </div>
         </div>
     </main>
 
-    <main id="contact-page" class="page max-w-5xl mx-auto w-full">
-        <div class="glass p-12 rounded-[50px] text-center space-y-6">
-            <h3 class="text-3xl font-black uppercase italic">Support</h3>
-            <p class="text-slate-400">For issues, DM <span class="text-primary font-bold">@bloxdhunter</span> on Discord.</p>
+    <<main id="legal-page" class="page max-w-6xl mx-auto w-full">
+        <div class="glass p-16 md:p-24 rounded-[60px] space-y-16">
+            <h2 class="text-6xl font-black italic uppercase text-center tracking-tighter">Legal & Privacy</h2>
+            
+            <div class="grid md:grid-cols-2 gap-16">
+                <div class="space-y-12">
+                    <section>
+                        <h3 class="legal-h3">Terms of Use</h3>
+                        <div class="space-y-4">
+                            <p class="text-[11px] font-bold text-primary uppercase tracking-widest">Non-Affiliation Disclaimer</p>
+                            <p class="text-slate-400 leading-relaxed text-sm">VisualHook is an independent application. We are <strong>NOT</strong> affiliated, associated, authorized, endorsed by, or in any way officially connected with Discord Inc. The name "Discord" is a registered trademark of its owners.</p>
+                            <p class="text-slate-400 leading-relaxed text-sm">By using this console, you agree to comply with Discord's Terms of Service and Community Guidelines. You are solely responsible for all content sent via your webhooks.</p>
+                        </div>
+                    </section>
+                </div>
+                <div class="space-y-12">
+                    <section>
+                        <h3 class="legal-h3">Privacy Policy</h3>
+                        <div class="space-y-4">
+                            <p class="text-[11px] font-bold text-secondary uppercase tracking-widest">Zero-Data Architecture</p>
+                            <p class="text-slate-400 leading-relaxed text-sm">We believe in absolute privacy. VisualHook does not use a backend database. Your Webhook URLs and message content are never stored, logged, or visible to the developers.</p>
+                            <p class="text-slate-400 leading-relaxed text-sm">All transmissions happen directly from your browser to Discord's servers via HTTPS. We may use <code>localStorage</code> to remember your UI preferences locally on your machine.</p>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <div class="pt-16 border-t border-white/5 grid md:grid-cols-2 gap-16">
+                <div class="space-y-12">
+                    <section>
+                        <h3 class="legal-h3">Proprietary Rights</h3>
+                        <div class="space-y-4">
+                            <p class="text-[11px] font-bold text-red-500 uppercase tracking-widest">Copyright © 2026</p>
+                            <p class="text-slate-400 leading-relaxed text-sm">
+                                All code, design elements, and logic within VisualHook are the exclusive property of <strong>Vihan Mishra</strong>. 
+                                <strong>Unauthorized copying, redistribution, or modification of this source code is strictly prohibited.</strong>
+                            </p>
+                        </div>
+                    </section>
+                </div>
+                <div class="space-y-12">
+                    <section>
+                        <h3 class="legal-h3">Usage License</h3>
+                        <div class="space-y-4">
+                            <p class="text-[11px] font-bold text-slate-200 uppercase tracking-widest">End-User Permissions</p>
+                            <p class="text-slate-400 leading-relaxed text-sm">
+                                You are granted a non-exclusive license to <strong>use</strong> this tool for webhook management. This does not grant you the right to clone the application or host a separate version of this service.
+                            </p>
+                        </div>
+                    </section>
+                </div>
+            </div>
         </div>
     </main>
 
-    <footer>
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-2">
-                <div class="w-5 h-5 rounded bg-primary/20 flex items-center justify-center text-primary text-[10px] font-bold">V</div>
-                <span class="text-[11px] font-bold tracking-widest uppercase">VisualHook Console</span>
+    <main id="contact-page" class="page max-w-5xl mx-auto">
+        <div class="grid md:grid-cols-5 gap-10">
+            <div class="md:col-span-2 glass p-12 rounded-[50px] text-center space-y-8 border-b-4 border-primary">
+                <div class="text-5xl">👨‍💻</div>
+                <h3 class="text-2xl font-black italic uppercase">The Developer</h3>
+                <div class="flex flex-col gap-4">
+                    <a href="https://github.com/Mr-Vihan" target="_blank" class="glass py-4 rounded-2xl font-bold hover:text-primary transition-all">GitHub Profile</a>
+                    <a href="https://instagram.com/v1han_mishra" target="_blank" class="glass py-4 rounded-2xl font-bold hover:text-primary transition-all">Instagram</a>
+                </div>
             </div>
-            <p class="text-[10px] font-medium tracking-tight">Copyright © 2026 <span class="text-white">Vihan Mishra</span>. <span class="text-primary italic ml-2">All Rights Reserved.</span></p>
-            <div class="text-[9px] uppercase tracking-widest font-black opacity-40">Proprietary Software</div>
+            <div class="md:col-span-3 glass p-12 rounded-[50px] flex flex-col justify-center space-y-10">
+                <h3 class="text-4xl font-black italic uppercase">Get In Touch</h3>
+                <div class="space-y-6">
+                    <div>
+                        <p class="doc-label mb-2">Discord ID</p>
+                        <div class="flex items-center gap-4">
+                            <p class="text-2xl font-black tracking-tight text-primary">bloxdhunter</p>
+                            <button onclick="navigator.clipboard.writeText('bloxdhunter'); alert('ID Copied!');" class="text-[10px] bg-white/5 px-3 py-1 rounded-full hover:bg-white/10 transition-all font-bold uppercase tracking-widest">Copy</button>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="doc-label mb-2">Technical Feedback</p>
+                        <a href="https://github.com/Mr-Vihan/VisualHook/issues/new" target="_blank" class="text-2xl font-black tracking-tight text-secondary hover:underline transition-all italic underline-offset-8">Report a Bug on GitHub</a>
+                    </div>
+                </div>
+            </div>
         </div>
-    </footer>
+    </main>
 
     <script>
         function showPage(pageId) {
@@ -162,14 +238,22 @@
             const input = document.getElementById('webhook-url');
             const status = document.getElementById('url-status');
             const pattern = /^https:\/\/discord\.com\/api\/webhooks\/\d+\/[\w-]+$/;
-            if(url === "") { input.className = "w-full p-4 rounded-2xl text-sm"; status.innerText = ""; return false; }
+
+            if(url === "") {
+                input.className = "w-full p-4 rounded-2xl text-sm";
+                status.innerText = "";
+                return false;
+            }
+
             if(pattern.test(url)) {
                 input.className = "w-full p-4 rounded-2xl text-sm input-success";
-                status.innerText = "✓ Valid"; status.className = "text-[9px] text-green-500 uppercase font-bold";
+                status.innerText = "✓ Valid Endpoint";
+                status.className = "text-[9px] font-bold uppercase tracking-widest text-green-500";
                 return true;
             } else {
                 input.className = "w-full p-4 rounded-2xl text-sm input-error";
-                status.innerText = "× Invalid"; status.className = "text-[9px] text-red-500 uppercase font-bold";
+                status.innerText = "× Invalid Discord URL";
+                status.className = "text-[9px] font-bold uppercase tracking-widest text-red-500";
                 return false;
             }
         }
@@ -177,33 +261,56 @@
         function parseDiscord(text) {
             if(!text) return "";
             let str = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-            return str.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>').replace(/\n/g, '<br>');
+            str = str.replace(/^&gt;&gt;&gt;\s([\s\S]*)$/m, '<div class="dc-quote">$1</div>');
+            str = str.replace(/^&gt;\s(.*)$/gm, '<div class="dc-quote">$1</div>');
+            return str
+                .replace(/\[(.*?)\]\((.*?)\)/g, '<a class="text-blue-400 hover:underline" href="$2" target="_blank">$1</a>')
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/`(.*?)`/g, '<code class="bg-black/30 px-1 rounded">$1</code>')
+                .replace(/\n/g, '<br>');
         }
 
         function addEmbed() {
             const container = document.getElementById('embeds-container');
-            const count = container.children.length;
-            if (count >= 10) return;
+            const count = container.getElementsByClassName('embed-entry').length;
+            if (count >= 10) return alert("Max 10 embeds.");
+            
             const div = document.createElement('div');
             div.className = "embed-entry glass p-6 rounded-3xl border-white/5 space-y-4 relative";
             div.innerHTML = `
-                <div class="flex justify-between items-center"><span class="text-[10px] font-bold uppercase opacity-40">Embed #${count + 1}</span>
-                <button onclick="this.parentElement.parentElement.remove(); updatePreview();" class="text-red-500 text-[9px] font-bold uppercase">Remove</button></div>
-                <div class="grid grid-cols-2 gap-4"><input type="text" placeholder="Title" class="embed-title p-4 rounded-2xl text-sm" oninput="updatePreview()"><input type="color" value="#8b5cf6" class="embed-color w-full h-[54px] rounded-2xl bg-transparent border-none cursor-pointer" oninput="updatePreview()"></div>
-                <textarea rows="3" placeholder="Description..." class="embed-desc w-full p-4 rounded-2xl text-sm resize-none" oninput="updatePreview()"></textarea>`;
+                <div class="flex justify-between items-center">
+                    <span class="text-[10px] font-bold uppercase tracking-tighter opacity-40">Embed #${count + 1}</span>
+                    <button onclick="this.parentElement.parentElement.remove(); updatePreview();" class="text-red-500 text-[9px] font-bold uppercase tracking-widest">Remove</button>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" placeholder="Embed Title" class="embed-title p-4 rounded-2xl text-sm" oninput="updatePreview()">
+                    <input type="color" value="#8b5cf6" class="embed-color w-full h-[54px] rounded-2xl bg-transparent border-none cursor-pointer" oninput="updatePreview()">
+                </div>
+                <textarea rows="3" placeholder="Embed Description..." class="embed-desc w-full p-4 rounded-2xl text-sm resize-none" oninput="updatePreview()"></textarea>
+            `;
             container.appendChild(div);
+            updatePreview();
         }
 
         function updatePreview() {
-            document.getElementById('prev-name').innerText = document.getElementById('hook-name').value || "VisualBot";
-            document.getElementById('prev-avatar').src = document.getElementById('hook-avatar').value || "https://cdn.discordapp.com/embed/avatars/0.png";
-            document.getElementById('content-render').innerHTML = parseDiscord(document.getElementById('msg-input').value) || "Awaiting data...";
+            const name = document.getElementById('hook-name').value;
+            const avatar = document.getElementById('hook-avatar').value;
+            const content = document.getElementById('msg-input').value;
+
+            document.getElementById('prev-name').innerText = name || "VisualBot";
+            document.getElementById('prev-avatar').src = avatar || "https://cdn.discordapp.com/embed/avatars/0.png";
+            document.getElementById('content-render').innerHTML = parseDiscord(content) || "Awaiting transmission data...";
+            
             const list = document.getElementById('embed-list-render');
             list.innerHTML = "";
             Array.from(document.getElementsByClassName('embed-entry')).forEach(entry => {
-                const t = entry.querySelector('.embed-title').value, d = entry.querySelector('.embed-desc').value, c = entry.querySelector('.embed-color').value;
+                const t = entry.querySelector('.embed-title').value;
+                const d = entry.querySelector('.embed-desc').value;
+                const c = entry.querySelector('.embed-color').value;
                 if(t || d) {
-                    const eb = document.createElement('div'); eb.className = "dc-embed"; eb.style.borderLeftColor = c;
+                    const eb = document.createElement('div');
+                    eb.className = "dc-embed"; eb.style.borderLeftColor = c;
                     eb.innerHTML = `<div class="font-bold text-white text-[17px] mb-1">${parseDiscord(t)}</div><div class="text-[14px] text-[#dbdee1]">${parseDiscord(d)}</div>`;
                     list.appendChild(eb);
                 }
@@ -211,20 +318,30 @@
         }
 
         async function send() {
-            if(!validateURL()) return alert("Invalid URL.");
+            if(!validateURL()) return alert("Error: Invalid URL.");
             const btn = document.getElementById('send-btn');
             btn.innerText = "TRANSMITTING..."; btn.disabled = true;
+
             const embeds = [];
             Array.from(document.getElementsByClassName('embed-entry')).forEach(entry => {
-                const t = entry.querySelector('.embed-title').value, d = entry.querySelector('.embed-desc').value, c = entry.querySelector('.embed-color').value;
+                const t = entry.querySelector('.embed-title').value.trim();
+                const d = entry.querySelector('.embed-desc').value.trim();
+                const c = entry.querySelector('.embed-color').value;
                 if (t || d) embeds.push({ title: t || undefined, description: d || undefined, color: parseInt(c.replace("#", ""), 16) });
             });
-            const payload = { username: document.getElementById('hook-name').value || undefined, avatar_url: document.getElementById('hook-avatar').value || undefined, content: document.getElementById('msg-input').value || undefined, embeds: embeds.length > 0 ? embeds : undefined };
+
+            const payload = {
+                username: document.getElementById('hook-name').value.trim() || undefined,
+                avatar_url: document.getElementById('hook-avatar').value.trim() || undefined,
+                content: document.getElementById('msg-input').value.trim() || undefined,
+                embeds: embeds.length > 0 ? embeds : undefined
+            };
+
             try {
                 const res = await fetch(document.getElementById('webhook-url').value, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload) });
-                alert(res.ok ? "Success." : "Error: " + res.status);
+                if(res.ok) alert("Success."); else alert("API Rejection (400). Ensure embeds aren't empty.");
             } catch(e) { alert("Network Error."); }
-            btn.innerText = "TRANSMIT PAYLOAD"; btn.disabled = false;
+            finally { btn.innerText = "TRANSMIT PAYLOAD"; btn.disabled = false; }
         }
     </script>
 </body>
