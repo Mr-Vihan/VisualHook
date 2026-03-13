@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" id="root" class="dark">
 <head>
-<link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><rect width="16" height="16" rx="3" fill="%238b5cf6"/><text x="8" y="11" font-family="Arial" font-weight="900" font-size="10" text-anchor="middle" fill="white">V</text></svg>'>
-    <meta charset="UTF-8"
+    <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><rect width="16" height="16" rx="3" fill="%238b5cf6"/><text x="8" y="11" font-family="Arial" font-weight="900" font-size="10" text-anchor="middle" fill="white">V</text></svg>'>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>VisualHook | Secure Webhook Console</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -41,6 +41,12 @@
 
         .doc-label { font-size: 11px; font-weight: 800; color: #8b5cf6; letter-spacing: 0.2em; text-transform: uppercase; }
         .legal-h3 { font-size: 1.5rem; font-weight: 800; text-transform: uppercase; font-style: italic; margin-bottom: 1rem; color: #fff; border-left: 4px solid #8b5cf6; padding-left: 1rem; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
     </style>
 </head>
 <body class="dark">
@@ -142,7 +148,7 @@
         </div>
     </main>
 
-    <<main id="legal-page" class="page max-w-6xl mx-auto w-full">
+    <main id="legal-page" class="page max-w-6xl mx-auto w-full">
         <div class="glass p-16 md:p-24 rounded-[60px] space-y-16">
             <h2 class="text-6xl font-black italic uppercase text-center tracking-tighter">Legal & Privacy</h2>
             
@@ -227,6 +233,15 @@
     </main>
 
     <script>
+        // Init state from local storage
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedUrl = localStorage.getItem('visualhook_url');
+            if (savedUrl) {
+                document.getElementById('webhook-url').value = savedUrl;
+                validateURL();
+            }
+        });
+
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId + '-page').classList.add('active');
@@ -234,7 +249,7 @@
         }
 
         function validateURL() {
-            const url = document.getElementById('webhook-url').value;
+            const url = document.getElementById('webhook-url').value.trim();
             const input = document.getElementById('webhook-url');
             const status = document.getElementById('url-status');
             const pattern = /^https:\/\/discord\.com\/api\/webhooks\/\d+\/[\w-]+$/;
@@ -249,6 +264,7 @@
                 input.className = "w-full p-4 rounded-2xl text-sm input-success";
                 status.innerText = "✓ Valid Endpoint";
                 status.className = "text-[9px] font-bold uppercase tracking-widest text-green-500";
+                localStorage.setItem('visualhook_url', url);
                 return true;
             } else {
                 input.className = "w-full p-4 rounded-2xl text-sm input-error";
@@ -318,69 +334,61 @@
         }
 
         async function send() {
-    if(!validateURL()) return alert("Error: Invalid Webhook URL.");
-    
-    const btn = document.getElementById('send-btn');
-    const webhookUrl = document.getElementById('webhook-url').value.trim();
-    
-    // Grabbing values and trimming them to avoid space-only errors
-    const content = document.getElementById('msg-input').value.trim();
-    const username = document.getElementById('hook-name').value.trim();
-    const avatar_url = document.getElementById('hook-avatar').value.trim();
-    
-    const embeds = [];
-    Array.from(document.getElementsByClassName('embed-entry')).forEach(entry => {
-        const t = entry.querySelector('.embed-title').value.trim();
-        const d = entry.querySelector('.embed-desc').value.trim();
-        const c = entry.querySelector('.embed-color').value;
-        if (t || d) {
-            embeds.push({ 
-                title: t || undefined, 
-                description: d || undefined, 
-                color: parseInt(c.replace("#", ""), 16) 
+            if(!validateURL()) return alert("Error: Invalid Webhook URL.");
+            
+            const btn = document.getElementById('send-btn');
+            const webhookUrl = document.getElementById('webhook-url').value.trim();
+            const content = document.getElementById('msg-input').value.trim();
+            const username = document.getElementById('hook-name').value.trim();
+            const avatar_url = document.getElementById('hook-avatar').value.trim();
+            
+            const embeds = [];
+            Array.from(document.getElementsByClassName('embed-entry')).forEach(entry => {
+                const t = entry.querySelector('.embed-title').value.trim();
+                const d = entry.querySelector('.embed-desc').value.trim();
+                const c = entry.querySelector('.embed-color').value;
+                if (t || d) {
+                    embeds.push({ 
+                        title: t || undefined, 
+                        description: d || undefined, 
+                        color: parseInt(c.replace("#", ""), 16) 
+                    });
+                }
             });
+
+            if (!content && embeds.length === 0) {
+                return alert("Error: Payload is empty. Add a message or an embed.");
+            }
+
+            btn.innerText = "TRANSMITTING..."; 
+            btn.disabled = true;
+
+            const payload = {};
+            if (content) payload.content = content;
+            if (username) payload.username = username;
+            if (avatar_url) payload.avatar_url = avatar_url;
+            if (embeds.length > 0) payload.embeds = embeds;
+
+            try {
+                const res = await fetch(webhookUrl, { 
+                    method: 'POST', 
+                    headers: {'Content-Type': 'application/json'}, 
+                    body: JSON.stringify(payload) 
+                });
+                
+                if(res.ok) {
+                    alert("Success: Message Sent!");
+                } else {
+                    const errData = await res.json();
+                    alert("Discord Error: " + (errData.message || "Invalid Fields"));
+                }
+            } catch(e) { 
+                alert("Network Error: Connection Refused."); 
+            } finally { 
+                btn.innerText = "TRANSMIT PAYLOAD"; 
+                btn.disabled = false; 
+            }
         }
-    });
-
-    // Final check: Discord needs at least content OR an embed
-    if (!content && embeds.length === 0) {
-        return alert("Error: Payload is empty. Add a message or an embed.");
-    }
-
-    btn.innerText = "TRANSMITTING..."; 
-    btn.disabled = true;
-
-    // Constructing the payload object carefully
-    const payload = {};
-    if (content) payload.content = content;
-    if (username) payload.username = username;
-    if (avatar_url) payload.avatar_url = avatar_url;
-    if (embeds.length > 0) payload.embeds = embeds;
-
-    try {
-        const res = await fetch(webhookUrl, { 
-            method: 'POST', 
-            headers: {'Content-Type': 'application/json'}, 
-            body: JSON.stringify(payload) 
-        });
-        
-        if(res.ok) {
-            alert("Success: Message Sent!");
-        } else {
-            const errData = await res.json();
-            // This will tell you EXACTLY what field Discord hates
-            console.error("Discord Error Details:", errData);
-            alert("Discord Error: " + (errData.message || "Invalid Fields Check Console"));
-        }
-    } catch(e) { 
-        alert("Network Error: Connection Refused."); 
-    } finally { 
-        btn.innerText = "TRANSMIT PAYLOAD"; 
-        btn.disabled = false; 
-    }
-}
     </script>
 </body>
 </html>
-
-
