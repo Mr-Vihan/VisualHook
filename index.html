@@ -144,8 +144,16 @@
                     <p class="text-sm text-slate-400 leading-relaxed">VisualHook acts as a direct interface to the Discord Webhook API. When you execute a payload, the application serializes your inputs into a valid JSON object.</p>
                 </div>
                 <div class="space-y-6">
-                    <h4 class="text-secondary font-black uppercase tracking-widest text-xs">Markdown Standards</h4>
+	       <h4 class="text-primary font-black uppercase tracking-widest text-xs">Markdown Standards</h4>
                     <p class="text-sm text-slate-400 leading-relaxed">Our engine parses Discord-flavored markdown in real-time. This includes <strong>**bold**</strong> and <em>*italic*</em> text.</p>
+                </div>
+                <div class="space-y-6">
+                    <h4 class="text-secondary font-black uppercase tracking-widest text-xs">Avatar & Image Hosting</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed">VisualHook requires direct, publicly accessible URLs for all avatar and image inputs to stay compatible with the Discord API. Discord does not support Base64 or Data URIs (starting with data:image/...), which will cause a 400 Bad Request error. For stable branding, always use links ending in standard extensions like .png, .jpg, .webp, or .gif from a reliable hosting service.</p>
+                </div> 
+		<div class="space-y-6">   
+  		    <h4 class="text-secondary font-black uppercase tracking-widest text-xs">Webhook URL Security & Payload Limits</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed">Keep your Webhook URL private to prevent unauthorized access. Discord limits payloads to 6,000 characters and 10 embeds per message. Ensure your webhook name is 1–80 characters and avoid using "Clyde," as these common mistakes will trigger a 400 Bad Request error and block your post.</p>
                 </div>
             </div>
         </div>
