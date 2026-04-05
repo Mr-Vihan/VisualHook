@@ -42,15 +42,11 @@
         .doc-label { font-size: 11px; font-weight: 800; color: #8b5cf6; letter-spacing: 0.2em; text-transform: uppercase; }
         .legal-h3 { font-size: 1.5rem; font-weight: 800; text-transform: uppercase; font-style: italic; margin-bottom: 1rem; color: #fff; border-left: 4px solid #8b5cf6; padding-left: 1rem; }
         
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #050505; }
         ::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
     </style>
-    <!-- Cloudflare Web Analytics -->
-    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "e3753a44f79842c68b4014d25c0132ca"}'></script>
-    <!-- End Cloudflare Web Analytics -->
 </head>
 <body class="dark">
 
@@ -61,12 +57,12 @@
                 VISUAL<span class="text-primary italic">HOOK</span>
             </div>
             <div class="flex flex-wrap justify-center gap-4 md:gap-8 text-[9px] md:text-[11px] font-bold uppercase tracking-widest opacity-60">
-    <button onclick="showPage('hub')" class="hover:text-primary transition-all">Home</button>
-    <button onclick="showPage('sender')" class="hover:text-primary transition-all">Editor</button>
-    <button onclick="showPage('docs')" class="hover:text-primary transition-all">Docs</button>
-    <button onclick="showPage('contact')" class="hover:text-primary transition-all">Support</button>
-    <button onclick="showPage('legal')" class="hover:text-primary transition-all">Legal</button>
-</div>
+                <button onclick="showPage('hub')" class="hover:text-primary transition-all">Home</button>
+                <button onclick="showPage('sender')" class="hover:text-primary transition-all">Editor</button>
+                <button onclick="showPage('docs')" class="hover:text-primary transition-all">Docs</button>
+                <button onclick="showPage('contact')" class="hover:text-primary transition-all">Support</button>
+                <button onclick="showPage('legal')" class="hover:text-primary transition-all">Legal</button>
+            </div>
         </div>
     </nav>
 
@@ -106,6 +102,19 @@
                                 <input type="color" value="#8b5cf6" class="embed-color w-full h-[54px] rounded-2xl bg-transparent border-none cursor-pointer" oninput="updatePreview()">
                             </div>
                             <textarea rows="3" placeholder="Embed Description..." class="embed-desc w-full p-4 rounded-2xl text-sm resize-none" oninput="updatePreview()"></textarea>
+                            
+                            <div class="grid grid-cols-2 gap-4">
+                                <input type="text" placeholder="Author Name" class="embed-auth-name p-3 rounded-xl text-xs" oninput="updatePreview()">
+                                <input type="text" placeholder="Author Icon URL" class="embed-auth-icon p-3 rounded-xl text-xs" oninput="updatePreview()">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <input type="text" placeholder="Thumbnail URL" class="embed-thumb p-3 rounded-xl text-xs" oninput="updatePreview()">
+                                <input type="text" placeholder="Large Image URL" class="embed-img p-3 rounded-xl text-xs" oninput="updatePreview()">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <input type="text" placeholder="Footer Text" class="embed-foot-text p-3 rounded-xl text-xs" oninput="updatePreview()">
+                                <input type="text" placeholder="Footer Icon URL" class="embed-foot-icon p-3 rounded-xl text-xs" oninput="updatePreview()">
+                            </div>
                         </div>
                     </div>
 
@@ -144,15 +153,15 @@
                     <p class="text-sm text-slate-400 leading-relaxed">VisualHook acts as a direct interface to the Discord Webhook API. When you execute a payload, the application serializes your inputs into a valid JSON object.</p>
                 </div>
                 <div class="space-y-6">
-	       <h4 class="text-primary font-black uppercase tracking-widest text-xs">Markdown Standards</h4>
+                    <h4 class="text-primary font-black uppercase tracking-widest text-xs">Markdown Standards</h4>
                     <p class="text-sm text-slate-400 leading-relaxed">Our engine parses Discord-flavored markdown in real-time. This includes <strong>**bold**</strong> and <em>*italic*</em> text.</p>
                 </div>
                 <div class="space-y-6">
                     <h4 class="text-secondary font-black uppercase tracking-widest text-xs">Avatar & Image Hosting</h4>
                     <p class="text-sm text-slate-400 leading-relaxed">VisualHook requires direct, publicly accessible URLs for all avatar and image inputs to stay compatible with the Discord API. Discord does not support Base64 or Data URIs (starting with data:image/...), which will cause a 400 Bad Request error. For stable branding, always use links ending in standard extensions like .png, .jpg, .webp, or .gif from a reliable hosting service.</p>
                 </div> 
-		<div class="space-y-6">   
-  		    <h4 class="text-secondary font-black uppercase tracking-widest text-xs">Webhook URL Security & Payload Limits</h4>
+                <div class="space-y-6">   
+                    <h4 class="text-secondary font-black uppercase tracking-widest text-xs">Webhook URL Security</h4>
                     <p class="text-sm text-slate-400 leading-relaxed">Keep your Webhook URL private to prevent unauthorized access. Discord limits payloads to 6,000 characters and 10 embeds per message. Ensure your webhook name is 1–80 characters and avoid using "Clyde," as these common mistakes will trigger a 400 Bad Request error and block your post.</p>
                 </div>
             </div>
@@ -162,7 +171,6 @@
     <main id="legal-page" class="page max-w-6xl mx-auto w-full">
         <div class="glass p-16 md:p-24 rounded-[60px] space-y-16">
             <h2 class="text-6xl font-black italic uppercase text-center tracking-tighter">Legal & Privacy</h2>
-            
             <div class="grid md:grid-cols-2 gap-16">
                 <div class="space-y-12">
                     <section>
@@ -185,11 +193,10 @@
                     </section>
                 </div>
             </div>
-
             <div class="pt-16 border-t border-white/5 grid md:grid-cols-2 gap-16">
                 <div class="space-y-12">
-                    <section>
-                        <h3 class="legal-h3">Proprietary Rights</h3>
+		    <section>
+                <h3 class="legal-h3">Proprietary Rights</h3>
                         <div class="space-y-4">
                             <p class="text-[11px] font-bold text-red-500 uppercase tracking-widest">Copyright © 2026</p>
                             <p class="text-slate-400 leading-relaxed text-sm">
@@ -214,7 +221,7 @@
         </div>
     </main>
 
-    <main id="contact-page" class="page max-w-5xl mx-auto">
+<main id="contact-page" class="page max-w-5xl mx-auto">
         <div class="grid md:grid-cols-5 gap-10">
             <div class="md:col-span-2 glass p-12 rounded-[50px] text-center space-y-8 border-b-4 border-primary">
                 <div class="text-5xl">👨‍💻</div>
@@ -244,13 +251,13 @@
     </main>
 
     <script>
-        // Init state from local storage
         document.addEventListener('DOMContentLoaded', () => {
             const savedUrl = localStorage.getItem('visualhook_url');
             if (savedUrl) {
                 document.getElementById('webhook-url').value = savedUrl;
                 validateURL();
             }
+            updatePreview();
         });
 
         function showPage(pageId) {
@@ -286,31 +293,23 @@
         }
 
         function parseDiscord(text) {
-    if(!text) return "";
-    
-    // 1. Escape HTML to prevent XSS
-    let str = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-
-    // 2. Headers (Must be at start of line)
-    str = str.replace(/^-# (.*$)/gm, '<div class="text-[13px] font-bold uppercase text-slate-400 mt-2">$1</div>'); // Small Header
-    str = str.replace(/^## (.*$)/gm, '<div class="text-[17px] font-bold border-b border-white/5 pb-1 mt-3">$1</div>'); // Sub Header
-    str = str.replace(/^# (.*$)/gm, '<div class="text-[22px] font-black border-b border-white/10 pb-2 mt-4">$1</div>'); // Big Header
-
-    // 3. Blockquotes (Multi-line and Single-line)
-    str = str.replace(/^&gt;&gt;&gt;\s([\s\S]*)$/m, '<div class="dc-quote border-l-4 border-[#4e5058] pl-3 my-2">$1</div>');
-    str = str.replace(/^&gt;\s(.*)$/gm, '<div class="dc-quote border-l-4 border-[#4e5058] pl-3 my-1">$1</div>');
-
-    // 4. Formatting (Bold, Italic, Code)
-    return str
-        .replace(/\[(.*?)\]\((.*?)\)/g, '<a class="text-[#00a8fc] hover:underline" href="$2" target="_blank">$1</a>')
-        .replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>') // Bold Italic
-        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-        .replace(/\*(.*?)\*/g, '<em>$1</em>')
-        .replace(/__(.*?)__/g, '<u class="underline">$1</u>') // Underline
-        .replace(/`(.*?)`/g, '<code class="bg-[#1e1f22] px-1 rounded text-sm">$1</code>')
-        .replace(/```([\s\S]*?)```/g, '<pre class="bg-[#1e1f22] p-3 rounded-md my-2 overflow-x-auto"><code>$1</code></pre>') // Code Blocks
-        .replace(/\n/g, '<br>');
-}
+            if(!text) return "";
+            let str = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            str = str.replace(/^-# (.*$)/gm, '<div class="text-[13px] font-bold uppercase text-slate-400 mt-2">$1</div>');
+            str = str.replace(/^## (.*$)/gm, '<div class="text-[17px] font-bold border-b border-white/5 pb-1 mt-3">$1</div>');
+            str = str.replace(/^# (.*$)/gm, '<div class="text-[22px] font-black border-b border-white/10 pb-2 mt-4">$1</div>');
+            str = str.replace(/^&gt;&gt;&gt;\s([\s\S]*)$/m, '<div class="dc-quote border-l-4 border-[#4e5058] pl-3 my-2">$1</div>');
+            str = str.replace(/^&gt;\s(.*)$/gm, '<div class="dc-quote border-l-4 border-[#4e5058] pl-3 my-1">$1</div>');
+            return str
+                .replace(/\[(.*?)\]\((.*?)\)/g, '<a class="text-[#00a8fc] hover:underline" href="$2" target="_blank">$1</a>')
+                .replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>')
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/__(.*?)__/g, '<u class="underline">$1</u>')
+                .replace(/`(.*?)`/g, '<code class="bg-[#1e1f22] px-1 rounded text-sm">$1</code>')
+                .replace(/```([\s\S]*?)```/g, '<pre class="bg-[#1e1f22] p-3 rounded-md my-2 overflow-x-auto"><code>$1</code></pre>')
+                .replace(/\n/g, '<br>');
+        }
 
         function addEmbed() {
             const container = document.getElementById('embeds-container');
@@ -325,10 +324,22 @@
                     <button onclick="this.parentElement.parentElement.remove(); updatePreview();" class="text-red-500 text-[9px] font-bold uppercase tracking-widest">Remove</button>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
+                    <input type="text" placeholder="Author Name" class="embed-auth-name p-3 rounded-xl text-xs" oninput="updatePreview()">
+                    <input type="text" placeholder="Author Icon URL" class="embed-auth-icon p-3 rounded-xl text-xs" oninput="updatePreview()">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
                     <input type="text" placeholder="Embed Title" class="embed-title p-4 rounded-2xl text-sm" oninput="updatePreview()">
                     <input type="color" value="#8b5cf6" class="embed-color w-full h-[54px] rounded-2xl bg-transparent border-none cursor-pointer" oninput="updatePreview()">
                 </div>
                 <textarea rows="3" placeholder="Embed Description..." class="embed-desc w-full p-4 rounded-2xl text-sm resize-none" oninput="updatePreview()"></textarea>
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" placeholder="Thumbnail URL" class="embed-thumb p-3 rounded-xl text-xs" oninput="updatePreview()">
+                    <input type="text" placeholder="Large Image URL" class="embed-img p-3 rounded-xl text-xs" oninput="updatePreview()">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" placeholder="Footer Text" class="embed-foot-text p-3 rounded-xl text-xs" oninput="updatePreview()">
+                    <input type="text" placeholder="Footer Icon URL" class="embed-foot-icon p-3 rounded-xl text-xs" oninput="updatePreview()">
+                </div>
             `;
             container.appendChild(div);
             updatePreview();
@@ -345,14 +356,49 @@
             
             const list = document.getElementById('embed-list-render');
             list.innerHTML = "";
+            
             Array.from(document.getElementsByClassName('embed-entry')).forEach(entry => {
-                const t = entry.querySelector('.embed-title').value;
-                const d = entry.querySelector('.embed-desc').value;
-                const c = entry.querySelector('.embed-color').value;
-                if(t || d) {
+                const data = {
+                    title: entry.querySelector('.embed-title').value,
+                    desc: entry.querySelector('.embed-desc').value,
+                    color: entry.querySelector('.embed-color').value,
+                    authName: entry.querySelector('.embed-auth-name').value,
+                    authIcon: entry.querySelector('.embed-auth-icon').value,
+                    thumb: entry.querySelector('.embed-thumb').value,
+                    img: entry.querySelector('.embed-img').value,
+                    footText: entry.querySelector('.embed-foot-text').value,
+                    footIcon: entry.querySelector('.embed-foot-icon').value
+                };
+
+                if(data.title || data.desc || data.authName || data.footText || data.img || data.thumb) {
                     const eb = document.createElement('div');
-                    eb.className = "dc-embed"; eb.style.borderLeftColor = c;
-                    eb.innerHTML = `<div class="font-bold text-white text-[17px] mb-1">${parseDiscord(t)}</div><div class="text-[14px] text-[#dbdee1]">${parseDiscord(d)}</div>`;
+                    eb.className = "dc-embed overflow-hidden transition-all"; 
+                    eb.style.borderLeftColor = data.color;
+                    
+                    let html = ``;
+                    if(data.authName) {
+                        html += `<div class="flex items-center gap-2 mb-2">
+                            ${data.authIcon ? `<img src="${data.authIcon}" class="w-6 h-6 rounded-full object-cover">` : ''}
+                            <span class="text-xs font-bold text-white">${data.authName}</span>
+                        </div>`;
+                    }
+                    html += `<div class="flex justify-between gap-4">
+                        <div class="flex-1 min-w-0">
+                            ${data.title ? `<div class="font-bold text-white text-[17px] mb-1 break-words">${parseDiscord(data.title)}</div>` : ''}
+                            ${data.desc ? `<div class="text-[14px] text-[#dbdee1] break-words">${parseDiscord(data.desc)}</div>` : ''}
+                        </div>
+                        ${data.thumb ? `<img src="${data.thumb}" class="w-20 h-20 rounded object-cover flex-shrink-0">` : ''}
+                    </div>`;
+                    if(data.img) {
+                        html += `<img src="${data.img}" class="mt-4 rounded-md w-full border border-white/5 object-cover max-h-[300px]">`;
+                    }
+                    if(data.footText) {
+                        html += `<div class="flex items-center gap-2 mt-4 opacity-60">
+                            ${data.footIcon ? `<img src="${data.footIcon}" class="w-5 h-5 rounded-full object-cover">` : ''}
+                            <span class="text-[11px] font-medium text-[#dbdee1]">${data.footText}</span>
+                        </div>`;
+                    }
+                    eb.innerHTML = html;
                     list.appendChild(eb);
                 }
             });
@@ -369,20 +415,30 @@
             
             const embeds = [];
             Array.from(document.getElementsByClassName('embed-entry')).forEach(entry => {
-                const t = entry.querySelector('.embed-title').value.trim();
-                const d = entry.querySelector('.embed-desc').value.trim();
-                const c = entry.querySelector('.embed-color').value;
-                if (t || d) {
-                    embeds.push({ 
-                        title: t || undefined, 
-                        description: d || undefined, 
-                        color: parseInt(c.replace("#", ""), 16) 
-                    });
+                const getVal = (cls) => entry.querySelector(cls).value.trim();
+                const embed = {
+                    title: getVal('.embed-title') || undefined,
+                    description: getVal('.embed-desc') || undefined,
+                    color: parseInt(getVal('.embed-color').replace("#", ""), 16),
+                    author: getVal('.embed-auth-name') ? {
+                        name: getVal('.embed-auth-name'),
+                        icon_url: getVal('.embed-auth-icon') || undefined
+                    } : undefined,
+                    footer: getVal('.embed-foot-text') ? {
+                        text: getVal('.embed-foot-text'),
+                        icon_url: getVal('.embed-foot-icon') || undefined
+                    } : undefined,
+                    thumbnail: getVal('.embed-thumb') ? { url: getVal('.embed-thumb') } : undefined,
+                    image: getVal('.embed-img') ? { url: getVal('.embed-img') } : undefined
+                };
+
+                if (embed.title || embed.description || embed.author || embed.footer || embed.thumbnail || embed.image) {
+                    embeds.push(embed);
                 }
             });
 
             if (!content && embeds.length === 0) {
-                return alert("Error: Payload is empty. Add a message or an embed.");
+                return alert("Error: Payload is empty.");
             }
 
             btn.innerText = "TRANSMITTING..."; 
