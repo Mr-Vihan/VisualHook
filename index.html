@@ -297,6 +297,8 @@
             let str = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
             str = str.replace(/^-# (.*$)/gm, '<div class="text-[13px] font-bold uppercase text-slate-400 mt-2">$1</div>');
             str = str.replace(/^## (.*$)/gm, '<div class="text-[17px] font-bold border-b border-white/5 pb-1 mt-3">$1</div>');
+	        str = str.replace(/\|\|(.*?)\|\|/g, '<span class="bg-[#1e1f22] hover:bg-transparent transition-colors rounded px-1 cursor-help">$1</span>'); // Spoilers
+	        str = str.replace(/~~(.*?)~~/g, '<del>$1</del>');
             str = str.replace(/^# (.*$)/gm, '<div class="text-[22px] font-black border-b border-white/10 pb-2 mt-4">$1</div>');
             str = str.replace(/^&gt;&gt;&gt;\s([\s\S]*)$/m, '<div class="dc-quote border-l-4 border-[#4e5058] pl-3 my-2">$1</div>');
             str = str.replace(/^&gt;\s(.*)$/gm, '<div class="dc-quote border-l-4 border-[#4e5058] pl-3 my-1">$1</div>');
